@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GLP Glow — Lose Weight. Keep Your Glow.</title>
+<meta name="description" content="Daily beauty scores and AI guidance designed for women on GLP-1 medications who want to protect hair, muscle, hydration and youthful appearance while losing weight.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --blush:    #F2E0D9;
+    --rose:     #D4756B;
+    --rose-dk:  #B85A50;
+    --rose-lt:  #F0C4BC;
+    --plum:     #7A4D6E;
+    --plum-lt:  #C8A8BE;
+    --cream:    #FDF7F2;
+    --warm-wh:  #FFFAF7;
+    --charcoal: #2C2320;
+    --muted:    #7A6863;
+    --gold:     #C8963A;
+    --gold-lt:  #F0D4A0;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ══ NAV ══ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 48px;
+    background: rgba(253,247,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(212,117,107,0.12);
+  }
+  .logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal);
+    letter-spacing: -0.3px;
+  }
+  .logo em {
+    font-style: italic;
+    color: var(--rose);
+  }
+  .logo-dot { color: var(--gold); font-size: 14px; margin-left: 2px; vertical-align: super; }
+  .nav-cta {
+    background: var(--rose);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 10px 24px;
+    border-radius: 100px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .nav-cta:hover { background: var(--rose-dk); transform: translateY(-1px); }
+
+  /* ══ HERO ══ */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Soft organic background blob */
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: -5%;
+    width: 70%;
+    height: 120%;
+    background: radial-gradient(ellipse 70% 80% at 30% 50%,
+      rgba(242,224,217,0.7) 0%,
+      rgba(253,247,242,0) 70%);
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -10%;
+    right: -5%;
+    width: 50%;
+    height: 70%;
+    background: radial-gradient(ellipse 60% 70% at 70% 70%,
+      rgba(200,168,190,0.25) 0%,
+      transparent 70%);
+    pointer-events: none;
+  }
+
+  /* LEFT COLUMN */
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 72px 56px 72px 72px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--gold-lt);
+    border: 1px solid rgba(200,150,58,0.3);
+    border-radius: 100px;
+    padding: 5px 16px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #8B6420;
+    letter-spacing: 0.5px;
+    margin-bottom: 28px;
+    width: fit-content;
+  }
+  .eyebrow-dot {
+    width: 6px; height: 6px;
+    background: var(--gold);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(44px, 5vw, 68px);
+    line-height: 1.05;
+    letter-spacing: -1px;
+    color: var(--charcoal);
+    margin-bottom: 6px;
+  }
+  h1 .glow-line {
+    display: block;
+    font-style: italic;
+    color: var(--rose);
+  }
+
+  .hero-desc {
+    font-size: 17px;
+    color: var(--muted);
+    line-height: 1.75;
+    max-width: 440px;
+    margin-top: 20px;
+    margin-bottom: 36px;
+    font-weight: 300;
+  }
+  .hero-desc strong { color: var(--charcoal); font-weight: 500; }
+
+  /* ICON PILLARS */
+  .pillars {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+  }
+  .pillar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+  }
+  .pillar-icon {
+    width: 48px; height: 48px;
+    background: var(--blush);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+  }
+  .pillar span {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    line-height: 1.3;
+  }
+
+  /* EMAIL CAPTURE */
+  .capture-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 440px;
+  }
+  .capture-row {
+    display: flex;
+    gap: 10px;
+    background: #fff;
+    border: 1.5px solid var(--rose-lt);
+    border-radius: 14px;
+    padding: 6px 6px 6px 18px;
+    box-shadow: 0 4px 24px rgba(212,117,107,0.1);
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .capture-row:focus-within {
+    border-color: var(--rose);
+    box-shadow: 0 4px 32px rgba(212,117,107,0.2);
+  }
+  .capture-row input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: var(--charcoal);
+    background: transparent;
+  }
+  .capture-row input::placeholder { color: #C4B5B0; }
+  .btn-glow {
+    background: linear-gradient(135deg, var(--rose), #C86060);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 26px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 4px 16px rgba(212,117,107,0.35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-glow:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(212,117,107,0.45); }
+  .btn-glow svg { width: 16px; height: 16px; }
+
+  .capture-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .capture-meta span {
+    font-size: 12px;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .capture-meta span::before {
+    content: '✓';
+    color: var(--rose);
+    font-weight: 600;
+    font-size: 11px;
+  }
+
+  /* RIGHT COLUMN — photo grid */
+  .hero-right {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 48px 48px 24px;
+    position: relative;
+    z-index: 1;
+    animation: fadeUp 0.9s 0.15s ease both;
+  }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+    max-width: 480px;
+  }
+
+  .photo-cell {
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 3/4;
+    background: var(--blush);
+    box-shadow: 0 8px 32px rgba(44,35,32,0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .photo-cell:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 48px rgba(44,35,32,0.15); }
+
+  /* Stagger heights slightly for visual rhythm */
+  .photo-cell:nth-child(2) { margin-top: 20px; }
+  .photo-cell:nth-child(5) { margin-top: -20px; }
+
+  .photo-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    filter: saturate(1.05) brightness(1.02);
+  }
+
+  /* Overlay tag */
+  .photo-tag {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    background: rgba(253,247,242,0.88);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--rose-dk);
+    border: 1px solid rgba(212,117,107,0.2);
+  }
+
+  /* ══ TRUST BAND ══ */
+  .trust-band {
+    background: var(--warm-wh);
+    border-top: 1px solid rgba(212,117,107,0.1);
+    border-bottom: 1px solid rgba(212,117,107,0.1);
+    padding: 32px 72px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 48px;
+    flex-wrap: wrap;
+  }
+  .trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--muted);
+    font-weight: 400;
+  }
+  .trust-icon {
+    width: 36px; height: 36px;
+    background: var(--blush);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .trust-item strong { color: var(--charcoal); font-weight: 500; display: block; font-size: 15px; }
+
+  /* ══ CONCERNS ══ */
+  .section-concerns {
+    padding: 96px 72px;
+    text-align: center;
+    background: var(--cream);
+  }
+  .section-label {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(32px, 4vw, 50px);
+    font-weight: 600;
+    color: var(--charcoal);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+  .section-title em { font-style: italic; color: var(--rose); }
+  .section-sub {
+    font-size: 17px;
+    color: var(--muted);
+    max-width: 520px;
+    margin: 0 auto 56px;
+    line-height: 1.7;
+  }
+
+  .concerns-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .concern-card {
+    background: #fff;
+    border: 1px solid rgba(212,117,107,0.12);
+    border-radius: 20px;
+    padding: 28px 16px;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  }
+  .concern-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(212,117,107,0.3);
+    box-shadow: 0 8px 32px rgba(212,117,107,0.1);
+  }
+  .concern-icon { font-size: 28px; margin-bottom: 10px; }
+  .concern-card p { font-size: 13px; color: var(--muted); font-weight: 400; line-height: 1.4; }
+
+  /* ══ HOW IT WORKS ══ */
+  .section-how {
+    background: linear-gradient(160deg, #F7EDE8 0%, var(--warm-wh) 60%);
+    padding: 96px 72px;
+  }
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    max-width: 960px;
+    margin: 56px auto 0;
+    position: relative;
+  }
+  .steps-grid::before {
+    content: '';
+    position: absolute;
+    top: 36px; left: 8%; right: 8%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose-lt), transparent);
+    pointer-events: none;
+  }
+  .step {
+    text-align: center;
+    position: relative;
+  }
+  .step-num {
+    width: 56px; height: 56px;
+    background: var(--rose);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 auto 18px;
+    box-shadow: 0 6px 20px rgba(212,117,107,0.35);
+    position: relative;
+    z-index: 1;
+  }
+  .step h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--charcoal);
+    margin-bottom: 8px;
+  }
+  .step p { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* ══ BOTTOM CTA ══ */
+  .section-cta {
+    background: linear-gradient(135deg, var(--plum) 0%, #5A3050 100%);
+    padding: 96px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .section-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: radial-gradient(circle at 20% 50%, rgba(212,117,107,0.15) 0%, transparent 50%),
+                      radial-gradient(circle at 80% 30%, rgba(200,150,58,0.1) 0%, transparent 50%);
+    pointer-events: none;
+  }
+  .section-cta .section-title { color: #fff; }
+  .section-cta .section-sub { color: rgba(255,255,255,0.72); }
+  .cta-form {
+    display: flex;
+    gap: 10px;
+    max-width: 460px;
+    margin: 40px auto 16px;
+    background: rgba(255,255,255,0.1);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
+    padding: 6px 6px 6px 20px;
+    backdrop-filter: blur(10px);
+    transition: border-color 0.2s;
+  }
+  .cta-form:focus-within { border-color: rgba(255,255,255,0.5); }
+  .cta-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    color: #fff;
+  }
+  .cta-form input::placeholder { color: rgba(255,255,255,0.5); }
+  .btn-cta-white {
+    background: linear-gradient(135deg, var(--rose), #C86060);
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    padding: 13px 26px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    transition: transform 0.15s, box-shadow 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-cta-white:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(0,0,0,0.25); }
+  .cta-meta {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .cta-meta span {
+    font-size: 13px;
+    color: rgba(255,255,255,0.6);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .cta-meta span::before { content: '✓'; color: var(--rose-lt); font-weight: 600; }
+
+  /* ══ FOOTER ══ */
+  footer {
+    background: var(--charcoal);
+    padding: 28px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  footer .logo { color: var(--warm-wh); }
+  footer p { font-size: 12px; color: rgba(255,255,255,0.4); }
+  footer a { color: rgba(255,255,255,0.4); text-decoration: none; margin-left: 16px; font-size: 12px; transition: color 0.2s; }
+  footer a:hover { color: rgba(255,255,255,0.7); }
+
+  /* ══ ANIMATIONS ══ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ══ RESPONSIVE ══ */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .hero { grid-template-columns: 1fr; min-height: auto; }
+    .hero-left { padding: 48px 24px 32px; }
+    .hero-right { padding: 0 24px 56px; }
+    .photo-grid { max-width: 100%; }
+    .photo-cell:nth-child(2),
+    .photo-cell:nth-child(5) { margin-top: 0; }
+    .trust-band { padding: 24px; gap: 24px; }
+    .section-concerns, .section-how, .section-cta { padding: 64px 24px; }
+    .concerns-grid { grid-template-columns: repeat(3, 1fr); }
+    .steps-grid { grid-template-columns: 1fr 1fr; }
+    .steps-grid::before { display: none; }
+    footer { padding: 24px; flex-direction: column; text-align: center; }
+  }
+  @media (max-width: 480px) {
+    .concerns-grid { grid-template-columns: 1fr 1fr; }
+    .pillars { gap: 16px; }
+    .capture-row { flex-direction: column; padding: 12px 16px; gap: 12px; }
+    .capture-row input { font-size: 16px; }
+    h1 { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">GLP <em>Glow</em><span class="logo-dot">✦</span></div>
+  <a href="#join" class="nav-cta">Join Early Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- LEFT: copy + capture -->
+  <div class="hero-left">
+    <div class="eyebrow">
+      <span class="eyebrow-dot"></span>
+      Now accepting early access
+    </div>
+
+    <h1>
+      Lose weight.
+      <span class="glow-line">Keep your glow.</span>
+    </h1>
+
+    <p class="hero-desc">
+      Daily beauty scores and AI guidance designed for women on GLP-1 medications who want to protect
+      <strong>hair, muscle, hydration</strong> and <strong>youthful appearance</strong> while losing weight.
+    </p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">💇‍♀️</div>
+        <span>Hair<br>Support</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💪</div>
+        <span>Muscle<br>Support</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">💧</div>
+        <span>Hydration<br>Score</span>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">✨</div>
+        <span>Daily Glow<br>Score™</span>
+      </div>
+    </div>
+
+    <div class="capture-wrap" id="join">
+      <div class="capture-row">
+        <input type="email" placeholder="Enter your email address" id="email-hero">
+        <button class="btn-glow" onclick="handleSignup('email-hero')">
+          Join Early Access
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 8h10M9 4l4 4-4 4"/>
+          </svg>
+        </button>
+      </div>
+      <div class="capture-meta">
+        <span>Free for early users</span>
+        <span>No spam, ever</span>
+        <span>Unsubscribe anytime</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: photo grid of 6 women 35–60 -->
+  <div class="hero-right">
+    <div class="photo-grid">
+
+      <!-- Using high-quality Unsplash portrait photos of diverse women 35–60 -->
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=400&q=80&crop=faces&fit=crop"
+             alt="Woman smiling confidently">
+        <div class="photo-tag">✨ Thriving</div>
+      </div>
+
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?w=400&q=80&crop=faces&fit=crop"
+             alt="Woman glowing with health">
+        <div class="photo-tag">💪 Strong</div>
+      </div>
+
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=400&q=80&crop=faces&fit=crop"
+             alt="Woman with radiant skin">
+        <div class="photo-tag">✦ Radiant</div>
+      </div>
+
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1563306406-e66174fa3787?w=400&q=80&crop=faces&fit=crop"
+             alt="Mature woman full of energy">
+        <div class="photo-tag">🌟 Glowing</div>
+      </div>
+
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1607779097040-26e80aa78e66?w=400&q=80&crop=faces&fit=crop"
+             alt="Woman looking vibrant">
+        <div class="photo-tag">💧 Hydrated</div>
+      </div>
+
+      <div class="photo-cell">
+        <img src="https://images.unsplash.com/photo-1505503693641-1926193e8d57?w=400&q=80&crop=faces&fit=crop"
+             alt="Woman with beautiful healthy hair">
+        <div class="photo-tag">✦ Confident</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAND -->
+<div class="trust-band">
+  <div class="trust-item">
+    <div class="trust-icon">🔬</div>
+    <div>
+      <strong>Science-Backed</strong>
+      Built on GLP-1 research
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">💄</div>
+    <div>
+      <strong>Beauty-Focused</strong>
+      Not just weight loss
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🤍</div>
+    <div>
+      <strong>Made for Women</strong>
+      Designed for 35–60
+    </div>
+  </div>
+  <div class="trust-item">
+    <div class="trust-icon">🤖</div>
+    <div>
+      <strong>Powered by AI</strong>
+      Personalized guidance
+    </div>
+  </div>
+</div>
+
+<!-- CONCERNS -->
+<section class="section-concerns">
+  <p class="section-label">You're not alone</p>
+  <h2 class="section-title">Women on GLP-1s often worry about<em>...</em></h2>
+  <p class="section-sub">GLP Glow tracks the things your doctor doesn't — so you can lose weight without losing what makes you, you.</p>
+
+  <div class="concerns-grid">
+    <div class="concern-card">
+      <div class="concern-icon">💆‍♀️</div>
+      <p>Hair thinning & shedding</p>
+    </div>
+    <div class="concern-card">
+      <div class="concern-icon">🪞</div>
+      <p>Looking older, faster</p>
+    </div>
+    <div class="concern-card">
+      <div class="concern-icon">💪</div>
+      <p>Losing muscle & curves</p>
+    </div>
+    <div class="concern-card">
+      <div class="concern-icon">⚡</div>
+      <p>Fatigue & low energy</p>
+    </div>
+    <div class="concern-card">
+      <div class="concern-icon">🌿</div>
+      "Ozempic face"
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section-how">
+  <p class="section-label" style="text-align:center;">How it works</p>
+  <h2 class="section-title" style="text-align:center;">Your <em>Daily Glow</em> in 4 steps</h2>
+
+  <div class="steps-grid">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h4>Daily Check-In</h4>
+      <p>60-second check-ins on nutrition, hydration, habits and how you feel.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h4>Get Your Glow Score™</h4>
+      <p>We calculate your personal daily Glow Score across 5 beauty indicators.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h4>See What Matters</h4>
+      <p>Track hair, muscle, hydration, recovery and nutrient support in one view.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <h4>Protect Your Glow</h4>
+      <p>AI guidance + small daily habits = long-term results you can actually see.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="section-cta">
+  <p class="section-label" style="color: var(--rose-lt);">Early access — free</p>
+  <h2 class="section-title" style="color:#fff;">Don't lose your glow.</h2>
+  <p class="section-sub">Be the first to get your personalized Glow Risk Profile when we launch.</p>
+
+  <form class="cta-form" onsubmit="handleSignupForm(event)">
+    <input type="email" placeholder="Enter your email address" id="email-cta" required>
+    <button type="submit" class="btn-cta-white">
+      Get My Glow Score
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 8h10M9 4l4 4-4 4"/>
+      </svg>
+    </button>
+  </form>
+
+  <div class="cta-meta">
+    <span>100% Free for early users</span>
+    <span>No spam, ever</span>
+    <span>Unsubscribe anytime</span>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">GLP <em>Glow</em><span class="logo-dot">✦</span></div>
+  <p>© 2024 GLP Glow. All rights reserved.</p>
+  <div>
+    <a href="#">Privacy Policy</a>
+    <a href="#">Terms of Use</a>
+    <a href="#">Contact</a>
+  </div>
+</footer>
+
+<script>
+  // Simple signup handler — swap with your real backend/Mailchimp/etc.
+  function handleSignup(inputId) {
+    const input = document.getElementById(inputId);
+    const email = input.value.trim();
+    if (!email || !email.includes('@')) {
+      input.focus();
+      input.style.borderBottom = '2px solid #D4756B';
+      return;
+    }
+    // Replace this with your actual endpoint
+    showSuccess(input.closest('.capture-row') || input.closest('.cta-form'));
+    input.value = '';
+  }
+
+  function handleSignupForm(e) {
+    e.preventDefault();
+    handleSignup('email-cta');
+  }
+
+  function showSuccess(container) {
+    const original = container.innerHTML;
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;width:100%;justify-content:center;">
+        <span style="font-size:22px;">✨</span>
+        <span style="font-size:15px;font-weight:500;color:var(--charcoal);">
+          You're on the list! We'll be in touch soon.
+        </span>
+      </div>`;
+    setTimeout(() => { container.innerHTML = original; }, 5000);
+  }
+
+  // Smooth entrance for below-fold sections
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.animation = 'fadeUp 0.7s ease both';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.concern-card, .step, .trust-item').forEach(el => {
+    el.style.opacity = '0';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
