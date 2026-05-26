@@ -584,7 +584,7 @@
 <!-- NAV -->
 <nav>
   <div class="logo">GLP <em>Glow</em><span class="logo-dot">✦</span></div>
-  <a href="#join" class="nav-cta">Join Early Access</a>
+  <a href="#email-cta" class="nav-cta">Join Early Access</a>
 </nav>
 
 <!-- HERO -->
@@ -815,37 +815,76 @@
 </footer>
 
 <script>
-  // Simple signup handler — swap with your real backend/Mailchimp/etc.
-  function handleSignup(inputId) {
+  // ── FORMSPREE EMAIL CAPTURE ─────────────────────────────────────
+  // Submissions are forwarded to: brianjjump@gmail.com
+  // SETUP: Go to formspree.io, sign up with brianjjump@gmail.com,
+  //        create a new form, and replace FORMSPREE_FORM_ID below
+  //        with your actual form ID (e.g. "xpzgkwqr")
+  // ────────────────────────────────────────────────────────────────
+  const FORMSPREE_ENDPOINT = 'https://formspree.io/f/xredokpr';
+ 
+  async function handleSignup(inputId) {
     const input = document.getElementById(inputId);
     const email = input.value.trim();
+ 
     if (!email || !email.includes('@')) {
       input.focus();
-      input.style.borderBottom = '2px solid #D4756B';
+      input.style.outline = '2px solid #D4756B';
+      setTimeout(() => { input.style.outline = ''; }, 2000);
       return;
     }
-    // Replace this with your actual endpoint
-    showSuccess(input.closest('.capture-row') || input.closest('.cta-form'));
-    input.value = '';
+ 
+    const container = input.closest('.capture-row') || input.closest('.cta-form');
+    const btnEl = container.querySelector('button');
+    if (btnEl) { btnEl.disabled = true; btnEl.textContent = 'Sending...'; }
+ 
+    try {
+      const res = await fetch(FORMSPREE_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({ email, source: 'GLP Glow Waitlist', _replyto: email })
+      });
+ 
+      if (res.ok) {
+        showSuccess(container);
+        input.value = '';
+      } else {
+        showError(container);
+      }
+    } catch (err) {
+      showError(container);
+    }
   }
-
+ 
   function handleSignupForm(e) {
     e.preventDefault();
     handleSignup('email-cta');
   }
-
+ 
   function showSuccess(container) {
     const original = container.innerHTML;
     container.innerHTML = `
       <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;width:100%;justify-content:center;">
         <span style="font-size:22px;">✨</span>
         <span style="font-size:15px;font-weight:500;color:var(--charcoal);">
-          You're on the list! We'll be in touch soon.
+          You\'re on the list! We\'ll be in touch soon.
         </span>
       </div>`;
     setTimeout(() => { container.innerHTML = original; }, 5000);
   }
-
+ 
+  function showError(container) {
+    const original = container.innerHTML;
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;gap:10px;padding:16px 20px;width:100%;justify-content:center;">
+        <span style="font-size:22px;">😕</span>
+        <span style="font-size:15px;font-weight:500;color:#D4756B;">
+          Something went wrong. Please try again.
+        </span>
+      </div>`;
+    setTimeout(() => { container.innerHTML = original; }, 4000);
+  }
+ 
   // Smooth entrance for below-fold sections
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(e => {
@@ -855,7 +894,7 @@
       }
     });
   }, { threshold: 0.1 });
-
+ 
   document.querySelectorAll('.concern-card, .step, .trust-item').forEach(el => {
     el.style.opacity = '0';
     observer.observe(el);
